@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="lib/dashboard-sidebar/scripts.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="lib/dashboard-sidebar/styles.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="#">Kancolle Resource Expenditure Logger </a>
+    </div>
+  </div>
+  <div class="container-fluid" ng-app="kREL">
+    <div class="row row-offcanvas row-offcanvas-left">
+      <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="SidebarController">
+        <ul class="nav nav-sidebar" ng-repeat="(mapIndex, mapArray) in mapsIndexes">
+          <li ng-repeat="area in mapArray"><a class="map-link" href="/#/map/{{mapIndex}}-{{area}}">{{mapIndex}}-{{area}}</a>
+        </ul>
+      </div>
+      <div id="main" class="col-sm-9 col-md-10">
+        <div ng-view></div>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/controllers.js"></script>
+
+
+</html>
