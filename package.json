@@ -4,7 +4,9 @@
   "description": "艦これ資材消費記録アプリ",
   "main": "index.js",
   "dependencies": {
-    "express": "~4.13.3"
+    "express": "~4.13.3",
+    "mongoose": "^4.1.9",
+    "body-parser": "^1.14.1"
   },
   "devDependencies": {},
   "scripts": {
