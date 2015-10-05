@@ -2,18 +2,47 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var path = require('path');
 
+//load configs
+var db = require('./config/db');
+
+//load models
 var Sortie = require('./js/models/sortie');
+var User = require('./js/models/user')
 
-
+//instantiate app
 var app = express();
+
+//setup middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('combined'));
+app.use(cookieParser());
+app.use(require('express-session')({
+  secret: 'mySecret',
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, 'public')));
 
+//authentication
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
+//app listening port
 var port = process.env.PORT || 8080;
 
+//connect to db
+mongoose.connect(db.url);
+
+//API ROUTER
 var router = express.Router();
 
 router.use(function(req, res, next){
@@ -22,9 +51,9 @@ router.use(function(req, res, next){
 })
 
 router.route('/sortie')
+  //create sortie
   .post(function(req, res){
     var sortie = new Sortie();
-
     sortie.fuel = req.body.fuel;
     sortie.ammo = req.body.ammo;
     sortie.steel = req.body.steel;
@@ -47,5 +76,47 @@ router.get('/', function(req, res){
 
 app.use('/api', router);
 
+
+
+app.route('/login')
+  .get(function(req, res){
+    res.sendfile('./public/views/login.html');
+  })
+  .post(passport.authenticate('local'),function(req, res){
+    res.send(req.user);
+  });
+
+app.post('/logout', function(req, res){
+  req.logOut();
+  res.send(200);
+})
+
+app.post('/register', function(req, res){
+  User.register(new User({ username: req.body.username}), req.body.password, function(err, account){
+    if (err){
+      return res.status(500).json({err: err});
+    }
+    passport.authenticate('local')(req, res, function() {
+      return res.status(200).json({status: 'Registration successful!'});
+    });
+  });
+});
+
+app.route('/')
+  .get(loggedIn,function(req, res){
+    console.log("logged in");
+    res.sendfile('./public/overview.html');
+  })
+
 app.listen(port);
 console.log("Server started at : " + port);
+
+
+function loggedIn(req, res, next){
+  console.log("hahaha");
+  if (req.user){
+    next();
+  } else{
+    res.redirect('http://www.google.com');
+  }
+}
