@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
 
 var Sortie = require('./js/models/sortie');
 
@@ -8,6 +9,7 @@ var Sortie = require('./js/models/sortie');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(morgan('combined'));
 
 
 var port = process.env.PORT || 8080;
@@ -22,7 +24,7 @@ router.use(function(req, res, next){
 router.route('/sortie')
   .post(function(req, res){
     var sortie = new Sortie();
-    
+
     sortie.fuel = req.body.fuel;
     sortie.ammo = req.body.ammo;
     sortie.steel = req.body.steel;
