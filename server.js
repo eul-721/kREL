@@ -80,15 +80,35 @@ app.use('/api', router);
 
 app.route('/login')
   .get(function(req, res){
+    //LOGIN GET request placeholder
     res.sendfile('./public/views/login.html');
   })
-  .post(passport.authenticate('local'),function(req, res){
-    res.send(req.user);
+  .post(function(req, res, next){
+    //LOGIN POST login attemp request placeholder
+    passport.authenticate('local', function(err, user, info){
+      //authentication custom callback
+      if (err){
+        return res.status(500).json({err: err});
+      }
+      if (!user){
+        return res.status(401).json({err: info});
+      }
+      req.logIn(user, function(err){
+        if(err){
+          return res.status(500).json({err: 'Could not log in user'});
+        }
+        res.status(200).json({
+          status: 'Login successful!',
+          user: user
+        });
+      });
+    })(req, res, next);
   });
 
-app.post('/logout', function(req, res){
+app.get('/logout', function(req, res){
+  //LOGOUT place
   req.logOut();
-  res.send(200);
+  res.status(200).json({status: 'Logged out.'});
 })
 
 app.post('/register', function(req, res){
