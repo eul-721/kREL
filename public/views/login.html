@@ -1,28 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="kREL">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="js/userPage.js"></script>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <div class="container">
-    <div class="card card-container">
-      <form class="form-signin">
+    <div class="text-center"><h1 >kREL Kancolle Logger</h1></div>
+    <div class="card center card-container" id="login-form">
+      <form class="form-signin" name="loginForm" ng-controller="LoginController" ng-submit="login(credentials)" novalidate>
         <span id="auth-email" class="auth-email"></span>
-        <input type="text" id="inputUsername" class="form-control" placeholder="Username" require autofocus>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="credentials.username" require autofocus>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="credentials.password" required>
         <div id="remember" class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block btn-smooth-cornered" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-info btn-block btn-smooth-cornered" id="register-button">Register</button>
       </form>
     </div>
+    <div class="card center card-container" id="register-form">
+      <form class="form-signin" action="/register" method="post">
+        <span id="auth-email" class="auth-email"></span>
+        <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+        <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" required>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+        <button class="btn btn-lg btn-primary btn-block btn-smooth-cornered" type="submit" id="register-confirm">Sign up!</button>
+      </form>
+    </div>
+
   </div>
 </body>
+
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/services.js"></script>
+<script type="text/javascript" src="js/controllers.js"></script>
+
 </html>
