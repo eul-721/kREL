@@ -10,13 +10,24 @@ kREL.controller('SidebarController',['$scope', function($scope){
   }]);
 
 kREL.controller('LoginController', ['$scope','$rootScope', 'AuthService', 'AUTH_EVENTS',function($scope,$rootScope, AuthService, AUTH_EVENTS ){
-  console.log(AUTH_EVENTS);
-
-  console.log(AuthService)
   $scope.credentials = {
     username: '',
     password: ''
   };
+
+  $scope.alert = {
+    type: 'danger',
+    msg: 'Poi! Your login info was incorrect. Please try again.',
+    show: false,
+    closeAlert : function(){this.show = false; }
+  }
+
+  $scope.formSelector = 'login';
+  $scope.switchForms = function(){
+    console.log('ahahdasda');
+    $scope.formSelector = ($scope.formSelector === 'login') ? 'register' : 'login';
+    console.log($scope.formSelector);
+  }
 
   $scope.login = function(credentials){
     AuthService.login(credentials).then(function (user){
@@ -24,6 +35,7 @@ kREL.controller('LoginController', ['$scope','$rootScope', 'AuthService', 'AUTH_
       $scope.setCurrentUser(user);
     }, function() {
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+      $scope.alert.show = true;
     })
   }
 

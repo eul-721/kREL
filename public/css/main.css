@@ -4,8 +4,18 @@
   height: 100%;
 }
 
+.text-center{
+  text-align: center;
+
+}
+
+.center{
+  margin: 0 auto;
+}
+
 .card-container.card {
-    max-width: 350px;
+    max-width: 800px;
+    width: 350px;
     padding: 40px 40px;
 }
 
@@ -16,7 +26,6 @@
     background-color: #F7F7F7;
     /* just in case there no content*/
     padding: 20px 25px 30px;
-    margin: 0 auto 25px;
     margin-top: 50px;
     /* shadows and rounded borders */
     -moz-border-radius: 2px;
@@ -63,8 +72,9 @@
     box-sizing: border-box;
 }
 
-.form-signin #inputEmail,
-.form-signin #inputPassword {
+.form-signin #inputUsername,
+.form-signin #inputPassword,
+.form-signin #inputEmail {
     direction: ltr;
     height: 44px;
     font-size: 16px;
@@ -100,9 +110,8 @@
     cursor: default;
 }
 
-.btn.btn-signin {
-    /*background-color: #4d90fe; */
-    background-color: rgb(104, 145, 162);
+.btn.btn-smooth-cornered {
+    /*background-color: rgb(104, 145, 162); */
     /* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
     padding: 0px;
     font-weight: 700;
@@ -112,16 +121,13 @@
     -webkit-border-radius: 3px;
     border-radius: 3px;
     border: none;
-    -o-transition: all 0.218s;
-    -moz-transition: all 0.218s;
-    -webkit-transition: all 0.218s;
-    transition: all 0.218s;
+
 }
 
 .btn.btn-signin:hover,
 .btn.btn-signin:active,
 .btn.btn-signin:focus {
-    background-color: rgb(12, 97, 33);
+    background-color: rgba(#4d90fe, 0.72);
 }
 
 .forgot-password {
@@ -132,4 +138,21 @@
 .forgot-password:active,
 .forgot-password:focus{
     color: rgb(12, 97, 33);
+}
+
+/* =======================ngAnimate CSS codes==========================*/
+/* The starting CSS styles for the enter animation */
+.fade {
+  line-height: 20px;
+  opacity: 1;
+}
+
+.fade.ng-hide-add, .animate-show.ng-hide-remove {
+  transition: all linear 0.5s;
+}
+
+.fade.ng-hide {
+  line-height: 0;
+  opacity: 0;
+  padding: 0 10px;
 }

@@ -1,4 +1,4 @@
-var kREL = angular.module('kREL', ['ngRoute', 'ui.router']);
+var kREL = angular.module('kREL', ['ngRoute', 'ngAnimate', 'ui.router','ui.bootstrap']);
 
 kREL.config(['$routeProvider',
   function($routeProvider){
