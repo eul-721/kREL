@@ -1,3 +1,5 @@
+var REGISTERATION_SUCCESS = 1;
+
 kREL.factory('AuthService', function($http, Session){
   var authService = {};
 
@@ -5,7 +7,6 @@ kREL.factory('AuthService', function($http, Session){
     return $http
       .post('/login', credentials)
       .then(function (res){
-        console.log(res);
         Session.create(res.data.user.id, res.data.user.role);
         return res.data.user;
       });
@@ -21,6 +22,14 @@ kREL.factory('AuthService', function($http, Session){
     }
     return (authService.isAuthenticated() && authorizedRoles.indexOf(Session.userRole) !==-1);
   };
+
+  authService.register = function(credentials){
+    return $http
+      .post('/register',credentials)
+      .then(function(res){
+        return REGISTERATION_SUCCESS;
+      })
+  }
 
   return authService;
 })

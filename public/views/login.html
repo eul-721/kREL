@@ -2,8 +2,6 @@
 <html ng-app="kREL">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="bower_components/angular-route/angular-route.js"></script>
   <script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -21,7 +19,9 @@
 
     <!-- LOGIN FORM -->
     <div class="card center card-container" id="login-form" ng-switch="formSelector">
-      <uib-alert close="alert.closeAlert()" type="{{alert.type}}" ng-show="alert.show" class="fade" >{{alert.msg}}</uib-alert>
+      <uib-alert type="{{alert.type}}" ng-show="alertVisible" class="fade" >
+        <span>{{alert.msg}}</span>
+      </uib-alert>
       <div  ng-switch-default>
         <form class="form-signin" name="loginForm"  ng-submit="login(credentials)" novalidate>
           <span id="auth-email" class="auth-email"></span>
@@ -37,11 +37,11 @@
         </form>
       </div>
       <div  ng-switch-when="register">
-        <form class="form-signin" action="/register" method="post">
+        <form class="form-signin" ng-submit="register(credentials)" method="post">
           <span id="auth-email" class="auth-email"></span>
-          <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-          <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" required>
-          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+          <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" ng-model="credentials.username" required autofocus>
+          <input name="email" type="text" id="inputEmail" class="form-control" placeholder="Email" ng-model="credentials.password" required>
+          <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" ng-model="credentials.email" required>
 
           <button class="btn btn-lg btn-primary btn-block btn-smooth-cornered" type="submit" id="register-confirm">Sign up!</button>
         </form>
