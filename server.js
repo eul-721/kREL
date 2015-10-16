@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
+var LocalStrategy = require('passport-local').Strategy;
 var path = require('path');
 
 //load configs
@@ -19,7 +19,7 @@ var app = express();
 
 //setup middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(require('express-session')({
@@ -32,7 +32,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //authentication
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -85,7 +85,11 @@ app.route('/login')
   })
   .post(function(req, res, next){
     //LOGIN POST login attemp request placeholder
+    console.log(req);
     passport.authenticate('local', function(err, user, info){
+      console.log(err);
+      console.log(user);
+      console.log(info);
       //authentication custom callback
       if (err){
         return res.status(500).json({err: err});
@@ -112,6 +116,8 @@ app.get('/logout', function(req, res){
 })
 
 app.post('/register', function(req, res){
+  console.log(req.body.username);
+  console.log(req.body.password);
   User.register(new User({ username: req.body.username}), req.body.password, function(err, account){
     if (err){
       return res.status(500).json({err: err});
