@@ -1,9 +1,8 @@
 var assert = require('assert'),
-supertest = require('supertest')
-request = require('request'),
+supertest = require('supertest'),
 fs = require('fs'),
 path = require('path'),
-chance = new (require('chance'))()
+chance = new (require('chance'))();
 
 var KREL_URL = "http://localhost:8080";
 
@@ -26,7 +25,7 @@ describe('Auth',function(){
         done();
       })
 
-    });
+    })
   });
 
   describe("register", function(){
@@ -49,7 +48,7 @@ describe('Auth',function(){
           done();
         })
       });
-      
+
 
     })
   })

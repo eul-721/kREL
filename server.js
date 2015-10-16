@@ -85,11 +85,7 @@ app.route('/login')
   })
   .post(function(req, res, next){
     //LOGIN POST login attemp request placeholder
-    console.log(req);
     passport.authenticate('local', function(err, user, info){
-      console.log(err);
-      console.log(user);
-      console.log(info);
       //authentication custom callback
       if (err){
         return res.status(500).json({err: err});
@@ -116,8 +112,6 @@ app.get('/logout', function(req, res){
 })
 
 app.post('/register', function(req, res){
-  console.log(req.body.username);
-  console.log(req.body.password);
   User.register(new User({ username: req.body.username}), req.body.password, function(err, account){
     if (err){
       return res.status(500).json({err: err});
@@ -139,7 +133,6 @@ console.log("Server started at : " + port);
 
 
 function loggedIn(req, res, next){
-  console.log("hahaha");
   if (req.user){
     next();
   } else{
