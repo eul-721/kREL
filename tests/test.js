@@ -2,9 +2,10 @@ var assert = require('assert'),
 supertest = require('supertest'),
 fs = require('fs'),
 path = require('path'),
-chance = new (require('chance'))();
+chance = new (require('chance'))()
 
-var KREL_URL = "http://localhost:8080";
+
+var KREL_URL = "http://localhost:" + 8082;
 
 
 var testAccount = JSON.parse(
@@ -14,9 +15,10 @@ var testAccount = JSON.parse(
 
 
 describe('Auth',function(){
+  this.timeout(5000);
   describe("login", function(){
     it("should be able to login with registered accounts", function(done){
-      supertest("http://localhost:8080")
+      supertest(KREL_URL)
       .post('/login')
       .send(testAccount)
       .expect(200)

@@ -7,13 +7,21 @@ gulp.task('connect', function(){
   nodemon({
     script: 'server.js',
     ext: 'js html css',
-    env: {'NODE_ENV' : 'development'}
+    env: {'NODE_ENV' : 'dev'}
     })
-  .on('start', ['test']);
 
 
 
 });
+
+gulp.task('testing', function(){
+  nodemon({
+    script: 'server.js',
+    ext: 'js html css',
+    env: {'NODE_ENV' : 'test'}
+  })
+  .on('start', ['test'])
+})
 
 gulp.task('test',function(){
   gulp.src('tests/test.js', {read: false}).

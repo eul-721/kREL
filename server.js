@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var path = require('path');
 
 //load configs
-var db = require('./config/db');
+var config = require('./config/config')();
 
 //load models
 var Sortie = require('./js/models/sortie');
@@ -36,17 +36,21 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-//app listening port
-var port = process.env.PORT || 8080;
+//ENVIRONMENT
+console.log("ENV : " + process.env.NODE_ENV);
 
-//connect to db
-mongoose.connect(db.url);
+//app listening port
+var port = config.port  || 8080;
+
+//connect to config
+console.log(config.DBUrl)
+mongoose.connect(config.DBUrl);
 
 //API ROUTER
 var router = express.Router();
 
 router.use(function(req, res, next){
-  console.log("something is happening");
+  ("something is happening");
   next();
 })
 
@@ -124,7 +128,7 @@ app.post('/register', function(req, res){
 
 app.route('/')
   .get(loggedIn,function(req, res){
-    console.log("logged in");
+    ("logged in");
     res.sendfile('./public/overview.html');
   })
 
