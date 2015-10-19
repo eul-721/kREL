@@ -6,7 +6,9 @@ var gulp = require('gulp'),
 gulp.task('connect', function(){
   nodemon({
     script: 'server.js',
-    ext: 'js html css',
+    //ext: 'js html css',
+    watch: ['./js/','./config/','./'],
+    ignore: ['./public/'],
     env: {'NODE_ENV' : 'dev'}
     })
 
@@ -17,7 +19,9 @@ gulp.task('connect', function(){
 gulp.task('testing', function(){
   nodemon({
     script: 'server.js',
-    ext: 'js html css',
+    //ext: 'js html css',
+    watch: ['./js/','./config/','./'],
+    ignore: ['./public/'],
     env: {'NODE_ENV' : 'test'}
   })
   .on('start', ['test'])
