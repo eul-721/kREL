@@ -10,6 +10,9 @@ var path = require('path');
 //load configs
 var config = require('./config/config')();
 
+//load helpers/modules
+var APIRouter = require('./js/APIRouter');
+
 //load models
 var Sortie = require('./js/models/sortie');
 var User = require('./js/models/user')
@@ -46,46 +49,17 @@ var port = config.port  || 8080;
 console.log(config.DBUrl)
 mongoose.connect(config.DBUrl);
 
-//API ROUTER
-var router = express.Router();
 
-router.use(function(req, res, next){
-  ("something is happening");
-  next();
-})
 
-router.route('/sortie')
-  //create sortie
-  .post(function(req, res){
-    var sortie = new Sortie();
-    sortie.fuel = req.body.fuel;
-    sortie.ammo = req.body.ammo;
-    sortie.steel = req.body.steel;
-    sortie.bauxite = req.body.bauxite;
-    sortie.results = req.body.results;
-    sortie.comments = req.body.comments;
-
-    sortie.save(function(err){
-      if(err)
-        res.send(err);
-
-      res.json({ message: 'A sortie has been added'});
-    })
-
-  })
-
-router.get('/', function(req, res){
-  res.json({ message: 'api'});
-});
-
-app.use('/api', router);
+app.use('/api', new APIRouter(loggedIn));
 
 
 
 app.route('/login')
   .get(function(req, res){
     //LOGIN GET request placeholder
-    res.sendfile('./public/views/login.html');
+
+    res.redirect('/#/login');
   })
   .post(function(req, res, next){
     //LOGIN POST login attemp request placeholder
@@ -137,9 +111,11 @@ console.log("Server started at : " + port);
 
 
 function loggedIn(req, res, next){
+  console.log(req.user);
   if (req.user){
     next();
   } else{
-    res.redirect('http://www.google.com');
+    res.status(401).json({error: "You are not logged in"});
+    res.redirect('/#/login');
   }
 }
