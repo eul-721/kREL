@@ -15,4 +15,8 @@ var SortieSchema = new Schema({
   user_id: Schema.ObjectId
 })
 
+//TODO: Add a one to many mapping to girls
+
+SortieSchema.index({map: 1});
+
 module.exports = mongoose.model('Sortie', SortieSchema);
