@@ -1,0 +1,24 @@
+
+  <div class="container-fluid">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="#">Kancolle Resource Expenditure Logger </a>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row row-offcanvas row-offcanvas-left">
+      <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="SidebarController">
+        <ul class="nav nav-sidebar" ng-repeat="(mapIndex, mapArray) in mapsIndexes">
+          <li ng-repeat="area in mapArray"><a class="map-link" ng-click="selectMap(mapIndex,area)" href="">{{mapIndex}}-{{area}}</a>
+        </ul>
+      </div>
+      <div id="main" class="col-sm-9 col-md-10">
+        <div ng-controller="MapOverviewController">
+          <span>{{map}}</span>
+          <ul>
+            <li ng-repeat="sortie in sorties">{{sortie}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>

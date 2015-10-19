@@ -1,0 +1,43 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="/bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-route/angular-route.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body ng-app="kREL">
+
+    <div class="container-fluid">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <a class="navbar-brand" href="#">Kancolle Resource Expenditure Logger </a>
+      </div>
+    </div>
+  <div ng-view class="content-container"></div>
+</body>
+
+
+
+<!-- main framework js -->
+<script type="text/javascript" src="/modules/app.js"></script>
+<script type="text/javascript" src="/modules/controllers.js"></script>
+<script type="text/javascript" src="/modules/services.js"></script>
+
+<!-- authSystem js -->
+<script type="text/javascript" src="/modules/components/authSystem/module.js"></script>
+<script type="text/javascript" src="/modules/components/authSystem/controllers.js"></script>
+
+<!-- Sidebar js -->
+<script type="text/javascript" src="/modules/components/Sidebar/controllers.js"></script>
+
+<!-- Map Overview js -->
+<script type="text/javascript" src="/modules/components/MapOverview/controllers.js"></script>
+
+
+
+</html>

@@ -1,15 +1,4 @@
-kREL.controller('SidebarController',['$scope', function($scope){
-    $scope.mapsIndexes = {
-      "1":[1,2,3,4,5,6],
-      "2":[1,2,3,4,5],
-      "3":[1,2,3,4,5],
-      "4":[1,2,3,4,5],
-      "5":[1,2,3,4,5],
-      "6":[1,2,3]
-    }
-  }]);
-
-kREL.controller('LoginController', ['$scope','$rootScope','$timeout','$location', 'AuthService', 'AUTH_EVENTS',function($scope,$rootScope,$timeout,$location, AuthService, AUTH_EVENTS ){
+authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$location', 'AuthService', 'AUTH_EVENTS',function($scope,$rootScope,$timeout,$location, AuthService, AUTH_EVENTS ){
   $scope.credentials = {
     username: '',
     password: '',
@@ -69,7 +58,7 @@ kREL.controller('LoginController', ['$scope','$rootScope','$timeout','$location'
       showAlert();
       $timeout(function(){
         //TODO: Currently, this redirect targets another location. It needs to target the Single App version of Index.html instead.
-        $location.path('/');
+        $location.path('/overview');
       },3000);
     }, function() {
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
