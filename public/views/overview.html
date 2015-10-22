@@ -6,17 +6,28 @@
   </div>
   <div class="container-fluid">
     <div class="row row-offcanvas row-offcanvas-left">
-      <div class="col-sm-3 col-md-2 sidebar-offcanvas" id="sidebar" role="navigation" ng-controller="SidebarController">
-        <ul class="nav nav-sidebar" ng-repeat="(mapIndex, mapArray) in mapsIndexes">
-          <li ng-repeat="area in mapArray"><a class="map-link" ng-click="selectMap(mapIndex,area)" href="">{{mapIndex}}-{{area}}</a>
+      <div class="col-sm-3 col-md-2 " id="sidebar" role="navigation" ng-controller="SidebarController">
+        <ul class="nav nav-pills nav-stacked" ng-repeat="(mapIndex, mapArray) in mapsIndexes">
+          <li role="presentation" ng-repeat="area in mapArray">
+            <a class="map-link" ng-click="selectMap(mapIndex,area)" href="">
+              <span class="glyphicon glyphicon-triangle-right" aria-hidden="true">
+              {{mapIndex}}-{{area}}
+            </a>
         </ul>
       </div>
       <div id="main" class="col-sm-9 col-md-10">
-        <div ng-controller="MapOverviewController">
-          <span>{{map}}</span>
-          <ul>
-            <li ng-repeat="sortie in sorties">{{sortie}}</li>
-          </ul>
+        <div ng-controller="MapOverviewController" dw-loading="loading-map-details" dw-loading-options="{{loadOptions}}">
+          <h1>{{map}}</h1>
+
+          <uib-accordion close-others="oneAtATime">
+            <uib-accordion-group ng-repeat="sortie in sorties" template-url="/views/map-record-overview.html" heading="{{sortie.date}}"/>
+           <!--
+                The accordion should list months that users have records of
+                When expanded, records from that specific month are queried and rendered.
+
+            -->
+          </uib-accordion>
+
         </div>
       </div>
     </div>
