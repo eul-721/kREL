@@ -13,7 +13,7 @@ var SortieSchema = new Schema({
   result: String,
   comments: String,
   user_id: Schema.ObjectId
-})
+});
 
 //TODO: Add a one to many mapping to girls
 
