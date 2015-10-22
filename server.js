@@ -1,3 +1,4 @@
+var https = require('https');
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
@@ -6,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var path = require('path');
+var fs = require('fs');
 
 //load configs
 var config = require('./config/config')();
@@ -15,7 +17,7 @@ var APIRouter = require('./js/APIRouter');
 
 //load models
 var Sortie = require('./js/models/sortie');
-var User = require('./js/models/user')
+var User = require('./js/models/user');
 
 //instantiate app
 var app = express();
@@ -29,7 +31,7 @@ app.use(require('express-session')({
   secret: 'mySecret',
   resave: false,
   saveUninitialized: false
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -46,7 +48,7 @@ console.log("ENV : " + process.env.NODE_ENV);
 var port = config.port  || 8080;
 
 //connect to config
-console.log(config.DBUrl)
+console.log(config.DBUrl);
 mongoose.connect(config.DBUrl);
 
 
@@ -89,6 +91,14 @@ app.get('/logout', function(req, res){
   res.status(200).json({status: 'Logged out.'});
 })
 
+app.get('/logged_in', function(req,res){
+  if(req.user){
+    res.status(200).json({msg: "Logged in"});
+  } else{
+    res.status(401).json({error: "You are not logged in"});
+  }
+})
+
 app.post('/register', function(req, res){
   User.register(new User({ username: req.body.username}), req.body.password, function(err, account){
     if (err){
@@ -102,11 +112,14 @@ app.post('/register', function(req, res){
 
 app.route('/')
   .get(loggedIn,function(req, res){
-    ("logged in");
+    console.log("logged in");
     res.sendfile('./public/overview.html');
   })
 
-app.listen(port);
+https.createServer({
+  key: fs.readFileSync(path.join(config.ssl_directory,'key.pem')),
+  cert: fs.readFileSync(path.join(config.ssl_directory,'cert.pem'))
+},app).listen(port);
 console.log("Server started at : " + port);
 
 

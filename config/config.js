@@ -1,21 +1,26 @@
+var path = require('path');
+
 module.exports = function(){
   switch(process.env.NODE_ENV){
     case 'dev':
       return {
         DBUrl: 'mongodb://localhost:27017/kREL-DEV',
-        port: 8081
+        port: 4043,
+        ssl_directory: path.join(process.env.HOME, '.ssh')
       };
 
     case 'test':
       return {
         DBUrl: 'mongodb://localhost:27017/kREL-TEST',
-        port: 8082
-      }
+        port: 4044,
+        ssl_directory: path.join(process.env.HOME, '.ssh')
+      };
     case 'prod':
       return {
         DBUrl: 'mongodb://localhost:27010/kREL',
-        port: 8080
-      }
+        port: 4045,
+        ssl_directory: path.join(process.env.HOME, '.ssh')
+      };
 
   };
-}
+};
