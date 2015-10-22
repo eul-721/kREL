@@ -1,11 +1,11 @@
 #main{
-  padding:30px 40px;
+  padding:0px 40px;
   background-color: #FFFFFF;
   height: 100%;
 }
 
 .content-container{
-  margin-top:50px;
+  margin-top:60px;
 }
 
 .text-center{
@@ -15,6 +15,11 @@
 
 .center{
   margin: 0 auto;
+}
+
+
+.spacer{
+  margin-top: 40px;
 }
 
 .card-container.card {
