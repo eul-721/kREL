@@ -13,14 +13,16 @@ kREL.factory('AuthService', function($http,$cookies, Session){
       });
   };
 
-  authService.isAuthenticated = function(){
+  authService.isAuthenticated = function(cb,errcb){
     //$cookies.get('user')
-    return $cookies.get('user');
-  }
+    $http.get('/logged_in')
+        .then(cb)
+        .catch(errcb);
+  };
 
   authService.isAuthorized = function(authorizedRoles){
     if (!angular.isArray(authorizedRoles)){
-      authorizedRoles = [authorizedRoles]
+      authorizedRoles = [authorizedRoles];
     }
     return (authService.isAuthenticated() && authorizedRoles.indexOf(Session.userRole) !==-1);
   };
@@ -30,11 +32,11 @@ kREL.factory('AuthService', function($http,$cookies, Session){
       .post('/register',credentials)
       .then(function(res){
         return REGISTERATION_SUCCESS;
-      })
-  }
+      });
+  };
 
   return authService;
-})
+});
 
 
 kREL.factory('Session', function(){
@@ -50,7 +52,7 @@ kREL.factory('Session', function(){
       return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
     }
-  }
+  };
 
   session.create = function (userId, userRole){
     console.log(randomGUID());
@@ -62,15 +64,15 @@ kREL.factory('Session', function(){
     this.id = null;
     this.userId = null;
     this.userRole = null;
-  }
+  };
   return session;
-})
+});
 
 kREL.factory('mapService',function($http,$cookies){
   var currentSelectedMap = "";
 
   var _selectMap = function(map){
-    currentSelectedMap = map
+    currentSelectedMap = map;
   };
 
   var _getSelectedMap = function(){
@@ -83,7 +85,7 @@ kREL.factory('mapService',function($http,$cookies){
 
     console.log(currentSelectedMap);
     return $http.get('/api/sortie?map=' + currentSelectedMap);
-  }
+  };
 
   //var getSelectedMapOverviewForUser(user)
 
