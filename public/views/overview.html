@@ -20,12 +20,8 @@
           <h1>{{map}}</h1>
 
           <uib-accordion close-others="oneAtATime">
-            <uib-accordion-group ng-repeat="sortie in sorties" template-url="/views/map-record-overview.html" heading="{{sortie.date}}"/>
-           <!--
-                The accordion should list months that users have records of
-                When expanded, records from that specific month are queried and rendered.
-
-            -->
+            <uib-accordion-group ng-repeat="sortieGroup in sortieGroups"  heading="{{sortieGroup._id.year}} - {{sortieGroup._id.month}}" />
+              <map-record sortie-group="sortieGroup._id"/>
           </uib-accordion>
 
         </div>

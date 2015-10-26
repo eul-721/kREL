@@ -79,19 +79,26 @@ kREL.factory('mapService',function($http,$cookies){
     return currentSelectedMap;
   };
 
-  var _getMapSortiesForUser = function(){
+/**
+ *
+ */
+  var _getMapSortieGroupsForUser = function(){
     if(!$cookies.get('user'))
       return 'ERROR : USER NOT LOGGED IN';
 
     console.log(currentSelectedMap);
-    return $http.get('/api/sortie?map=' + currentSelectedMap);
+    return $http.get('/api/sortie?map=' + currentSelectedMap + '&monthOnly=1');
   };
 
-  //var getSelectedMapOverviewForUser(user)
+
+  var _getMapSortiesByYearMonthForUser = function(year, month){
+    return $http.get('/api/sortie?map='+currentSelectedMap+'&yearMonth='+year+','+month);
+  };
 
   return {
     selectMap: _selectMap,
     getSelectedMap : _getSelectedMap,
-    getMapSortiesForUser : _getMapSortiesForUser
+    getMapSortieGroupsForUser : _getMapSortieGroupsForUser,
+    getMapSortiesByYearMonthForUser : _getMapSortiesByYearMonthForUser
   };
 });

@@ -4,13 +4,13 @@ kREL.controller("MapOverviewController",['$scope','$loading','mapService',functi
   };
 
   $scope.map = mapService.getSelectedMap();
-  $scope.sorties = [];
+  $scope.sortieGroups = [];
   $scope.$watch(function(){return mapService.getSelectedMap();},function(newval, oldval){
     $scope.map = newval;
     $loading.start('loading-map-details');
-    mapService.getMapSortiesForUser().then(function(res){
+    mapService.getMapSortieGroupsForUser().then(function(res){
       $loading.finish('loading-map-details');
-      $scope.sorties = res.data;
+      $scope.sortieGroups = res.data;
     });
   });
 }]);
