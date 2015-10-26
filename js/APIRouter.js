@@ -15,10 +15,38 @@ module.exports = function(authenticate){
         res.status(500).json({ message : "You have to choose a map!"});
       else
         {
-          Sortie.find({map:req.query.map}, function(err, docs){
-            if (err) res.send(err);
-            res.status(200).send(docs);
-          });
+          if(req.query.monthOnly){
+            console.log(req.user);
+            Sortie.aggregate([
+                    {$match: {map : req.query.map, user_id:req.user._id}},
+                    {$project: { year:{$year: "$date"},month:{$month: "$date"}}},
+                    {$group: {_id:{ year:"$year",month:"$month"}}}
+                  ])
+                  .exec(function(err,docs){
+                    if (err) res.status(500).send(err);
+                    res.status(200).send(docs);
+                  });
+                  // .then(function(err,docs){
+                  //     if (err) res.send(err);
+                  //     console.log(docs);
+                  //     res.status(200).send(docs);
+                  //   });
+          }else{
+            if(req.query.yearMonth){
+              //getRecordsForYearMonth
+              Sortie.getRecordsForYearMonth(req.user._id,req.query.map,req.query.yearMonth).then(function(err, docs){
+                if (err) res.send(err);
+                res.status(200).send(docs);
+              });
+            }
+            else{
+              Sortie.find({map:req.query.map}).then(function(err, docs){
+                if (err) res.send(err);
+                res.status(200).send(docs);
+              });
+            }
+          }
+
         }
       //if no map index, return err
       //else give all maps associated to user
