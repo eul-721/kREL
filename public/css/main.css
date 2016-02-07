@@ -165,3 +165,25 @@
   opacity: 0;
   padding: 0 10px;
 }
+
+/* ============================================================*/
+.resource-icon::before{
+  display: inline-block;
+  vertical-align:middle;
+
+}
+#fuel::before{
+  content:url('/assets/img/fuel-icon.jpg');
+}
+#ammo::before{
+  content:url('/assets/img/ammo-icon.jpg');
+}
+#steel::before{
+  content:url('/assets/img/steel-icon.jpg');
+}
+#bauxite::before{
+  content:url('/assets/img/bauxite-icon.jpg');
+}
+#buckets::before{
+  content:url('/assets/img/buckets-icon.jpg');
+}

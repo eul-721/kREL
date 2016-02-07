@@ -7,24 +7,29 @@ var kREL = angular.module('kREL', ['ngRoute','ngCookies', 'ngAnimate', 'ui.route
 
 kREL.config(['$routeProvider',
   function($routeProvider){
-    $routeProvider.
-      when('/overview',{
+    $routeProvider
+      .when('/overview',{
         templateUrl : 'views/overview.html'
-      }).
-      when('/login',{
+      })
+      .when('/login',{
         templateUrl: 'modules/components/authSystem/login.html',
         controller: 'LoginController'
-      }).
-      when('/',{
+      })
+      .when('/newsortie/:mapId',{
+        templateUrl: 'views/sortieedit.html',
+        controller: 'SortieEditController'
+      })
+      .when('/',{
         templateUrl: 'views/landing.html'
-      }).
-      otherwise({
-        redirectTo: '/'
+      })
+      .otherwise({
+        redirectTo: '/overview'
       });
 }]);
 
 kREL.constant("kREL-CONSTANTS",{
-  "NEEDS_AUTH" : ['/overview']
+  "NEEDS_AUTH" : ['/overview'],
+  "DEBUG_MODE" : true
 });
 
 kREL.run(['$rootScope', '$location', 'AuthService', "kREL-CONSTANTS",function($rootScope, $location, AuthService, kRELCONSTANTS){

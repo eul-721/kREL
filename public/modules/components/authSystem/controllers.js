@@ -1,4 +1,5 @@
 authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$location', 'AuthService', 'AUTH_EVENTS',function($scope,$rootScope,$timeout,$location, AuthService, AUTH_EVENTS ){
+  "use strict";
   $scope.credentials = {
     username: '',
     password: '',
@@ -15,7 +16,7 @@ authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$loc
         },
     show: false,
     closeAlert : function(){this.show = false; }
-  }
+  };
 
   var alerts = {
     IncorrectLogin:{
@@ -34,7 +35,7 @@ authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$loc
       type: 'success',
       msg: 'Poi Poi! You can now login with your created account.'
     }
-  }
+  };
 
   $scope.alert = alerts.IncorrectLogin;
 
@@ -43,11 +44,11 @@ authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$loc
 
   $scope.formSelector = 'login';
   $scope.switchForms = function(){
-    var wasLogin = ($scope.formSelector === 'login')
+    var wasLogin = ($scope.formSelector === 'login');
     $scope.formSelector = wasLogin ? 'register' : 'login';
-    $scope.alert = wasLogin? alerts.RegistrationError : alerts.IncorrectLogin
+    $scope.alert = wasLogin? alerts.RegistrationError : alerts.IncorrectLogin;
     console.log($scope.formSelector);
-  }
+  };
 
   $scope.login = function(credentials){
     AuthService.login(credentials).then(function (user){
@@ -63,8 +64,8 @@ authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$loc
     }, function() {
       $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
       showAlert();
-    })
-  }
+    });
+  };
 
   $scope.register = function(credentials){
     AuthService.register(credentials).then(function(success){
@@ -73,19 +74,19 @@ authSystem.controller('LoginController', ['$scope','$rootScope','$timeout','$loc
       showAlert();
     }, function(){
       showAlert();
-    })
-  }
+    });
+  };
 
   var showAlert = function(){
     $scope.alertVisible = true;
     $timeout(function(){
       $scope.alertVisible = false;
     },3000);
-  }
+  };
 
   $scope.setCurrentUser = function (user) {
     $scope.currentUser = user;
-  }
+  };
 
 
 }]);

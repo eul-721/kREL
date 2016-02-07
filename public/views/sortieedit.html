@@ -1,0 +1,30 @@
+<div id="main" class="col-sm-12 col-md-12 col-lg-12">
+  <div ng-controller="SortieEditController" dw-loading="loading-map-details" dw-loading-options="{{loadOptions}}">
+    <h1>New Sortie</h1>
+    <h2>{{map}}</h2>
+  </div>
+
+  <form class="" ng-submit="submitSortie()" method="post">
+    <div class="form-group">
+      <label for="fuel">Fuel</label>
+      <input type="text" ng-model="fuel" name="fuel" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="ammo">Ammo</label>
+      <input type="text" ng-model="ammo" name="ammo" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="steel">Steel</label>
+      <input type="text" ng-model="steel" name="steel" value="" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="bauxite">Bauxite</label>
+      <input type="text" ng-model="bauxite" name="bauxite" value="" class="form-control">
+    </div>
+    <input type="submit" name="name" value="Submit">
+  </form>
+
+</div>

@@ -23,6 +23,7 @@
             <uib-accordion-group ng-repeat="sortieGroup in sortieGroups"  heading="{{sortieGroup._id.year}} - {{sortieGroup._id.month}}" />
               <map-record sortie-group="sortieGroup._id"/>
           </uib-accordion>
+          <a ng-click="newSortie()"> New Sortie </a>
 
         </div>
       </div>
