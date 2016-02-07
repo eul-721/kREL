@@ -2,6 +2,7 @@ var express = require('express');
 var Sortie = require('./models/sortie');
 module.exports = function(authenticate){
   //API ROUTER
+  "use strict";
   var router = express.Router();
 
   router.use(function(req, res, next){
@@ -34,13 +35,14 @@ module.exports = function(authenticate){
           }else{
             if(req.query.yearMonth){
               //getRecordsForYearMonth
-              Sortie.getRecordsForYearMonth(req.user._id,req.query.map,req.query.yearMonth).then(function(err, docs){
+              Sortie.getRecordsForYearMonth(req.user._id,req.query.map,req.query.yearMonth).then(function(docs, err){
                 if (err) res.send(err);
-                res.status(200).send(docs);
+                // res.status(200).send(docs);
+                res.send(docs);
               });
             }
             else{
-              Sortie.find({map:req.query.map}).then(function(err, docs){
+              Sortie.find({map:req.query.map}).then(function(docs, err){
                 if (err) res.send(err);
                 res.status(200).send(docs);
               });
